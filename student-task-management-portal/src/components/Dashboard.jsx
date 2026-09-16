@@ -5,18 +5,25 @@ import AddTask from "./AddTask";
 
 function Dashboard(props) {
 
-    function toggleTask(id){
+    async function toggleTask(id){
+        const task = props.tasks.find((task) => task.id === id);
+        const nextStatus = task.status === "Completed" ? "Pending" : "Completed";
+
+        const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: nextStatus })
+        });
+
+        if (!response.ok) {
+            throw new Error("Unable to update task status");
+        }
+
+        const updatedTask = await response.json();
         props.setTasks(
-            props.tasks.map((task) => {
-                if(task.id === id){
-                    return {...task, 
-                        status: task.status === "Completed" 
-                                    ? "Pending" 
-                                    : "Completed"
-                    };
-                }
-                return task;
-            })
+            props.tasks.map((currentTask) =>
+                currentTask.id === id ? updatedTask : currentTask
+            )
         );
     }
 
@@ -24,11 +31,22 @@ function Dashboard(props) {
         props.setTasks([...props.tasks, newTask]);
     }
 
-    function deleteTask(id){
+    async function deleteTask(id){
+        const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            throw new Error("Unable to delete task");
+        }
+
         props.setTasks(
             props.tasks.filter((task)=>task.id !==id)
         );
     }
+
+    const completedTasks = props.tasks.filter((task) => task.status === "Completed").length;
+    const pendingTasks = props.tasks.length - completedTasks;
 
     return (
         <>
@@ -36,9 +54,9 @@ function Dashboard(props) {
         <main>
         
             <div className="stats-container">
-                <StatCard title="Total Tasks" value="10"/>
-                <StatCard title="Completed" value="6"/>
-                <StatCard title="Pending" value="4"/>
+                <StatCard title="Total Tasks" value={props.tasks.length}/>
+                <StatCard title="Completed" value={completedTasks}/>
+                <StatCard title="Pending" value={pendingTasks}/>
                 
             </div>
 
