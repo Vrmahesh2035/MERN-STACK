@@ -523,3 +523,31 @@ main form button:focus-visible {
     color: #fff;
     transform: translateY(-1px);
 }
+
+
+.current-time{
+    color:var(--navy);
+    font: size 18px;
+    font-weight:700;
+    margin: top 6px;        
+}
+
+
+
+.status-completed {
+    animation: completedTask 0.6s ease;
+
+}
+@keyframes completedTask {
+    0%{
+        transform:scale(1);
+
+    }
+    50% {
+        transform: scale(1.05);
+
+    }
+    100%{
+        transform: scale(1);
+    }
+}

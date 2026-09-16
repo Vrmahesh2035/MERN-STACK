@@ -1,3 +1,4 @@
+import Welcome from "./Welcome";
 import StatCard from "./StatCard";
 import TaskCard from "./TaskCard";
 import AddTask from "./AddTask";
@@ -30,6 +31,8 @@ function Dashboard(props) {
     }
 
     return (
+        <>
+        <Welcome/>
         <main>
         
             <div className="stats-container">
@@ -58,6 +61,7 @@ function Dashboard(props) {
             </div>
 
         </main>
+        </>
     );
 }
 
