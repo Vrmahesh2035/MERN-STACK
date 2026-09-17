@@ -7,20 +7,14 @@ function AddTask(props){
     async function handleSubmit(e){
         e.preventDefault();
         const newTask = {
-            id:Date.now(),
             title: title,
             description: description,
             status: "Pending"
         };
         try{
-            const response = await fetch("http://localhost:5000/api/tasks", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(newTask)
-        });
-
-        const data = await response.json();
-        props.onAddTask(data);
+            await props.onAddTask(newTask);
+            setTitle("");
+            setDescription("");
         }catch(error){
             console.log(error);
         }
@@ -32,7 +26,7 @@ function AddTask(props){
             <form onSubmit={handleSubmit}>
                 <label>Add Title: </label>
                 <input 
-                    type="text" 
+                    type="text"   
                     value={title}
                     onChange={(e)=>setTitle(e.target.value)}
                 />

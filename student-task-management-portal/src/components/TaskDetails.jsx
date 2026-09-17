@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 function TaskDetails({ tasks }) {
 	const { id } = useParams();
-	const task = tasks.find((currentTask) => currentTask.id === Number(id));
+	const task = tasks.find((currentTask) => currentTask._id === id);
 
 	if (!task) {
 		return <p>Task not found.</p>;
