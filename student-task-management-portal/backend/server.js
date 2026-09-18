@@ -117,7 +117,7 @@ app.post("/api/login", async (req, res)=>{
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(401).json({message: "ur not eligible to login!!"});
+        return res.status(401).json({message: "ur gayyyyy....: )!!"});
       }
       res.json({
         message: "Login Successful",
@@ -128,6 +128,7 @@ app.post("/api/login", async (req, res)=>{
         message: "Login Failed"
       });
     }
+  });
     
 // start the server and listen to port 5000
 app.listen(5000, () => {
